@@ -109,7 +109,12 @@ public class Pathfinder {
                 path.Push(current.loc);
                 current = current.parent;
             }
-        }
+		}
+		else
+		{
+			// If we're in here, there was no valid path.
+			path = new Stack<Vector2>();
+		}
 
         return path;
     }

@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour {
 
     public PlayerState State { get; set; }
     private Vector3 MoveTarget { get; set; }
+	private Stack<Vector2> MovePath { get; set; }
 
     private LevelGenerator activeLevel;
 	
@@ -40,35 +41,41 @@ public class PlayerController : MonoBehaviour {
             {
                 if (hit.transform != null && LegalNavigationBlock(hit.transform))
                 {
-                    // Set player state
-                    State = PlayerState.CAMERA_MOVING;
-
-                    // Set the player's move target
-                    MoveTarget = new Vector3(hit.transform.position.x, 0, hit.transform.position.z);
-
-                    // If debug mode is on, draw a click-sphere
-                    PlaceClickSphere(hit.transform);
-
                     // Perform pathfinding.
                     if (activeLevel == null || !activeLevel.enabled)
                         activeLevel = GameObject.FindObjectOfType<LevelGenerator>() as LevelGenerator;
 
-                    Stack<Vector2> path = activeLevel.pathfinder.FindPath(new Vector2(transform.position.x, transform.position.z), new Vector2(hit.transform.position.x, hit.transform.position.z));
+                    MovePath = activeLevel.pathfinder.FindPath(new Vector2(transform.position.x, transform.position.z), new Vector2(hit.transform.position.x, hit.transform.position.z));
 
-                    // If debug mode is on, draw the nav path
-                    PlaceNavSpheres(path, hit.transform);
+					if (MovePath.Count > 0)
+					{
+						// If debug mode is on, draw a click-sphere
+						PlaceClickSphere(hit.transform);
+
+						// If debug mode is on, draw the nav path
+						PlaceNavSpheres(MovePath, hit.transform);
+
+						// Set the initial move target
+						MoveTarget = TranslatePathfindingToGrid(MovePath.Pop());
+
+						// Set player state
+						State = PlayerState.CAMERA_MOVING;
+					}
                 }
             }
         }
 
         // Move the player to the move target
         // Camera movement is bound by the _MaxCameraMoveSpeedPerSecond value
+		// Movement should follow the MovePath returned by the A* pathfinder
         if (State == PlayerState.CAMERA_MOVING)
         {
             transform.position = Vector3.MoveTowards(transform.position, MoveTarget, _MaxCameraMoveSpeedPerSecond * Time.deltaTime);
 
             // Check for movement completion and set state as appropriate.
-            if (transform.position == MoveTarget)
+			if (transform.position == MoveTarget && MovePath.Count > 0)
+				MoveTarget = TranslatePathfindingToGrid(MovePath.Pop());
+			else if(transform.position == MoveTarget && MovePath.Count == 0)
                 State = PlayerState.WAIT_FOR_INPUT;
         }
 	}
@@ -113,14 +120,21 @@ public class PlayerController : MonoBehaviour {
                 Destroy(navSpheres[i]);
 
             navSpheres = new List<GameObject>();
-            
-            while (path.Count > 1)
+
+			Stack<Vector2> tempPath = new Stack<Vector2>(new Stack<Vector2>(path));
+
+			while (tempPath.Count > 1)
             {
-                Vector2 pathStep = path.Pop();
+				Vector2 pathStep = tempPath.Pop();
                 GameObject navSphere = Instantiate(PATH_SPHERE_PREFAB);
                 navSphere.transform.position = new Vector3(pathStep.x, target.position.y + CLICK_SPHERE_Y_OFFSET, pathStep.y);
                 navSpheres.Add(navSphere);
             }
         }
     }
+
+	private Vector3 TranslatePathfindingToGrid(Vector2 node)
+	{
+		return new Vector3(node.x, 0, node.y);
+	}
 }
