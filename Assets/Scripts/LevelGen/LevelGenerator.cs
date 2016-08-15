@@ -6,7 +6,7 @@ using System.Collections;
 /// </summary>
 public class LevelGenerator : MonoBehaviour {
     private const float FLOOR_Y_OFFSET = -0.5f;
-
+    
     public int _Seed;
     public GameObject _Wall;
     public GameObject _Floor;
@@ -16,13 +16,21 @@ public class LevelGenerator : MonoBehaviour {
     public bool _Active = true;
 
     public GameObject[][] Level;
+    public Pathfinder pathfinder;
 
 	// Use this for initialization
 	public void Awake () {
         Random.InitState(_Seed);
 
-        if (_Active) GenerateLevelStructure();
+        if (_Active)
+            Init();
 	}
+
+    public void Init()
+    {
+        GenerateLevelStructure();
+        pathfinder = new Pathfinder(this);
+    }
 
     // Generate a simple level structure.
     // No specific algorithm is used to make a level make sense.
@@ -49,8 +57,6 @@ public class LevelGenerator : MonoBehaviour {
 
                 Level[i][j].transform.parent = transform;
                 Level[i][j].transform.localPosition = local;
-
-                
             }
         }
     }

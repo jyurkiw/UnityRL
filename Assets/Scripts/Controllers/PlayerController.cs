@@ -12,11 +12,23 @@ public class PlayerController : MonoBehaviour {
     public bool _DebugOn = false;
 
     public const string CLICK_SPHERE = "MarkerSphere";
+    public const string PATH_SPHERE = "PathSphere";
     public const float CLICK_SPHERE_Y_OFFSET = 1f;
+
+    private static GameObject CLICK_SPHERE_PREFAB;
+    private static GameObject PATH_SPHERE_PREFAB;
 
     public PlayerState State { get; set; }
     private Vector3 MoveTarget { get; set; }
+
+    private LevelGenerator activeLevel;
 	
+    public void Awake()
+    {
+        CLICK_SPHERE_PREFAB = (GameObject)Resources.Load(CLICK_SPHERE);
+        PATH_SPHERE_PREFAB = (GameObject)Resources.Load(PATH_SPHERE);
+    }
+
 	// Update is called once per frame
 	public void Update () {
         // Mouse input capture (Left click navigation)
@@ -34,8 +46,17 @@ public class PlayerController : MonoBehaviour {
                     // Set the player's move target
                     MoveTarget = new Vector3(hit.transform.position.x, 0, hit.transform.position.z);
 
-                    // if debug mode is on, draw a click-sphere
+                    // If debug mode is on, draw a click-sphere
                     PlaceClickSphere(hit.transform);
+
+                    // Perform pathfinding.
+                    if (activeLevel == null || !activeLevel.enabled)
+                        activeLevel = GameObject.FindObjectOfType<LevelGenerator>() as LevelGenerator;
+
+                    Stack<Vector2> path = activeLevel.pathfinder.FindPath(new Vector2(transform.position.x, transform.position.z), new Vector2(hit.transform.position.x, hit.transform.position.z));
+
+                    // If debug mode is on, draw the nav path
+                    PlaceNavSpheres(path, hit.transform);
                 }
             }
         }
@@ -75,9 +96,30 @@ public class PlayerController : MonoBehaviour {
             if (!clickSpheres.Contains(target))
             {
                 clickSpheres.Add(target);
-                GameObject clickSpherePrefab = (GameObject)Resources.Load(CLICK_SPHERE);
-                GameObject clickSphere = Instantiate(clickSpherePrefab);
+                GameObject clickSphere = Instantiate(CLICK_SPHERE_PREFAB);
                 clickSphere.transform.position = new Vector3(target.position.x, target.position.y + CLICK_SPHERE_Y_OFFSET, target.position.z);
+            }
+        }
+    }
+
+    private List<GameObject> navSpheres = new List<GameObject>();
+
+    private void PlaceNavSpheres(Stack<Vector2> path, Transform target)
+    {
+        if (_DebugOn)
+        {
+            // remove all existing pathing spheres
+            for (int i = 0; i < navSpheres.Count; i++)
+                Destroy(navSpheres[i]);
+
+            navSpheres = new List<GameObject>();
+            
+            while (path.Count > 1)
+            {
+                Vector2 pathStep = path.Pop();
+                GameObject navSphere = Instantiate(PATH_SPHERE_PREFAB);
+                navSphere.transform.position = new Vector3(pathStep.x, target.position.y + CLICK_SPHERE_Y_OFFSET, pathStep.y);
+                navSpheres.Add(navSphere);
             }
         }
     }
