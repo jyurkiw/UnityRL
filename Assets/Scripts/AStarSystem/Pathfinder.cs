@@ -59,28 +59,28 @@ public class Pathfinder {
             List<Vector2> adjacentBlocks = new List<Vector2>();
             // Check up
             target = new Vector2(current.loc.x, current.loc.y - 1);
-            if (target.y >= 0 && !closed.Contains(target) && BlockGrid[(int)target.y][(int)target.x].blockType == BlockType.FLOOR)
+            if (target.y >= 0 && !closed.Contains(target) && BlockGrid[(int)target.y][(int)target.x].blockType != BlockType.WALL)
                 adjacentBlocks.Add(target);
             else if (target.y >= 0 && BlockGrid[(int)target.y][(int)target.x].blockType == BlockType.WALL)
                 closed.Add(target);
 
             // Check left
             target = new Vector2(current.loc.x - 1, current.loc.y);
-            if (target.x >= 0 && !closed.Contains(target) && BlockGrid[(int)target.y][(int)target.x].blockType == BlockType.FLOOR)
+			if (target.x >= 0 && !closed.Contains(target) && BlockGrid[(int)target.y][(int)target.x].blockType != BlockType.WALL)
                 adjacentBlocks.Add(target);
             else if (target.x >= 0 && BlockGrid[(int)target.y][(int)target.x].blockType == BlockType.WALL)
                 closed.Add(target);
 
             // Check down
             target = new Vector2(current.loc.x, current.loc.y + 1);
-            if (target.y < BlockGrid.Length && !closed.Contains(target) && BlockGrid[(int)target.y][(int)target.x].blockType == BlockType.FLOOR)
+			if (target.y < BlockGrid.Length && !closed.Contains(target) && BlockGrid[(int)target.y][(int)target.x].blockType != BlockType.WALL)
                 adjacentBlocks.Add(target);
             else if (target.y < BlockGrid.Length && BlockGrid[(int)target.y][(int)target.x].blockType == BlockType.WALL)
                 closed.Add(target);
 
             // Check right
             target = new Vector2(current.loc.x + 1, current.loc.y);
-            if (target.x < BlockGrid[(int)target.y].Length && !closed.Contains(target) && BlockGrid[(int)target.y][(int)target.x].blockType == BlockType.FLOOR)
+			if (target.x < BlockGrid[(int)target.y].Length && !closed.Contains(target) && BlockGrid[(int)target.y][(int)target.x].blockType != BlockType.WALL)
                 adjacentBlocks.Add(target);
             else if (target.x < BlockGrid[(int)target.y].Length && BlockGrid[(int)target.y][(int)target.x].blockType == BlockType.WALL)
                 closed.Add(target);

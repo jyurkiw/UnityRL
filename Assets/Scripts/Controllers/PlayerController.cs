@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour {
     private Vector3 MoveTarget { get; set; }
 	private Stack<Vector2> MovePath { get; set; }
 
-    private LevelGenerator activeLevel;
+	public LevelGenerator activeLevel { get; set; }
 	
     public void Awake()
     {
@@ -83,7 +83,8 @@ public class PlayerController : MonoBehaviour {
     // Is the passed transform a legal target for player navigation?
     private bool LegalNavigationBlock(Transform target)
     {
-        return target.GetComponent<NavType>().blockType == BlockType.FLOOR;
+		BlockType targetType = target.GetComponent<NavType>().blockType;
+		return targetType == BlockType.FLOOR || targetType == BlockType.STAIR;
     }
 
     // Set of drawn clickspheres.
@@ -109,8 +110,10 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+	// List of navigation spheres for debugging
     private List<GameObject> navSpheres = new List<GameObject>();
 
+	// Place navigation spheres if debug is on.
     private void PlaceNavSpheres(Stack<Vector2> path, Transform target)
     {
         if (_DebugOn)
@@ -133,8 +136,16 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+	// translate a pathfinding Vector2 to a Vector3 position.
 	private Vector3 TranslatePathfindingToGrid(Vector2 node)
 	{
 		return new Vector3(node.x, 0, node.y);
+	}
+
+	// Cancel all pathfinding and movement.
+	public void CancelPathfindingAndMovement()
+	{
+		State = PlayerState.WAIT_FOR_INPUT;
+		MovePath.Clear();
 	}
 }

@@ -47,7 +47,6 @@ namespace Assets.Scripts.LevelGen
                 GameObject inEditorLevel = (GameObject)Resources.Load("LevelMarker");
                 inEditorLevel = Instantiate(inEditorLevel);
                 LevelGenerator generator = inEditorLevel.GetComponent<LevelGenerator>();
-                generator._Active = false;
 
                 inEditorLevel.transform.position = new Vector3(x, y, z);
                 generator._Depth = depth;

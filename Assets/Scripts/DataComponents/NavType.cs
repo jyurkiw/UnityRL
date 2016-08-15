@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum BlockType { FLOOR, WALL };
+public enum BlockType { FLOOR, WALL, STAIR };
 
 /// <summary>
 /// Nav Type data component.
