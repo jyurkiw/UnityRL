@@ -19,13 +19,21 @@ public class StairController : MonoBehaviour {
 		if (canTrigger)
 		{
 			PlayerController player = FindObjectOfType<PlayerController>();
+			bool changeLevel = false;
 
 			if (_StairType == StairType.DOWN)
-				player.activeLevel.SetNextSeed();
-			else player.activeLevel.SetPreviousSeed();
+				changeLevel = player.activeLevel.SetNextSeed();
+			else changeLevel = player.activeLevel.SetPreviousSeed();
 
-			player.CancelPathfindingAndMovement();
-			player.activeLevel.Init();
+			if (changeLevel)
+			{
+				player.CancelPathfindingAndMovement();
+				player.activeLevel.Init();
+			}
+			else
+			{
+				Debug.Log("Going back to town.");
+			}
 		}
 	}
 

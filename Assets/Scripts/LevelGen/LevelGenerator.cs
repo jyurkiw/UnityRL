@@ -102,19 +102,24 @@ public class LevelGenerator : MonoBehaviour {
 	// Make sure to reset random after generating the next seed,
 	// or the first floor will not be the same when you come back
 	// from the second for the first time.
-	public void SetNextSeed()
+	public bool SetNextSeed()
 	{
 		seeds.AddLast(_Seed);
 		Random.InitState(_Seed);
 		_Seed = Random.Range(0, int.MaxValue);
 		Random.InitState(_Seed);
+
+		return true;
 	}
 
 	// Move back to the previous seed value.
-	public void SetPreviousSeed()
+	public bool SetPreviousSeed()
 	{
+		if (seeds.Count == 0) return false;
+
 		_Seed = seeds.Last.Value;
 		seeds.RemoveLast();
 		Random.InitState(_Seed);
+		return true;
 	}
 }
