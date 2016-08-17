@@ -8,7 +8,7 @@ Project Goals:
 
  MVP Featureset:
  	Gameplay:
-		-[] Simple character creation
+		-[ ] Simple character creation
 			Class + Race
 		Simple character advancement
 			Level + Loot
