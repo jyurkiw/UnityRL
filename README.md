@@ -8,6 +8,7 @@ Project Goals:
 * Complete a minimum viable product
 
  MVP Featureset (**Bold** = In-progress, *Italics* = Placeholder in-place):
+ 
 Gameplay:
 * Simple character creation
 	* Class + Race
