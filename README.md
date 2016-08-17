@@ -7,10 +7,10 @@ Project Goals:
 	Complete a minimum viable product
 
  MVP Featureset:
- 	Gameplay:
-		- Simple character creation
-			 - Class + Race
-		Simple character advancement
+Gameplay:
+* Simple character creation
+* * Class + Race
+Simple Character Advancement:
 			Level + Loot
 			Each level should have enough enemy XP for the player to advance a level
 		Basic enemy set (3 enemies)
