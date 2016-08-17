@@ -9,23 +9,23 @@ Project Goals:
  MVP Featureset:
 Gameplay:
 * Simple character creation
-* * Class + Race
-Simple Character Advancement:
-			Level + Loot
-			Each level should have enough enemy XP for the player to advance a level
-		Basic enemy set (3 enemies)
-		Simple Victory condition
-			Defeat boss monster on dungeon level 10
-		Functional GUI
-			HP/MP
-			Dungeon level display
-	Navigation:
-		Click-to-move navigation
-		WASD stepping
-	Map Generation:
-		Simple procedural dungeon generation that is not Drunkard walk
-	Game State Save
-		Record character status
-		Record dungeon level
-		Record current level state
-		Record previous level states
+	* Class + Race
+* Simple Character Advancement
+	* Level + Loot
+	* Each level should have enough enemy XP for the player to advance a level
+* Basic enemy set (3 enemies)
+* Simple Victory condition
+	* Defeat boss monster on dungeon level 10
+* Functional GUI
+	* HP/MP
+	* Dungeon level display
+* Navigation
+	* Click-to-move navigation
+	* WASD stepping
+* Map Generation:
+	* Simple procedural dungeon generation that is not Drunkard walk
+* Game State Save
+	* Record character status
+	* Record dungeon level
+	* Record current level state
+	* Record previous level states
