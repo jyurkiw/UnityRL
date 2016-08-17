@@ -131,4 +131,17 @@ public class LevelGenerator : MonoBehaviour {
 		Random.InitState(_Seed);
 		return true;
 	}
+
+	// Basic check to see if the target block is legal for a move
+	public bool IsTargetBlockLegalForMove(Vector2 destination)
+	{
+		int x = (int)destination.x;
+		int y = (int)destination.y;
+		bool legal = true;
+
+		legal &= y >= 0 && y < Level.Length;
+		legal &= x >= 0 && Level.Length > 0 && x < Level[0].Length;
+		legal &= Level[y][x].GetComponent<NavType>().blockType != BlockType.WALL;
+		return legal;
+	}
 }
