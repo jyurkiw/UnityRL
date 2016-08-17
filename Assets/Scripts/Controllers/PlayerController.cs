@@ -22,12 +22,23 @@ public class PlayerController : MonoBehaviour {
     private Vector3 MoveTarget { get; set; }
 	private Stack<Vector2> MovePath { get; set; }
 
-	public LevelGenerator activeLevel { get; set; }
+	private LevelGenerator _activeLevel;
+	public LevelGenerator ActiveLevel
+	{
+		get
+		{
+			if (_activeLevel == null || !_activeLevel.enabled)
+				_activeLevel = GameObject.FindObjectOfType<LevelGenerator>() as LevelGenerator;
+			return _activeLevel;
+		}
+	}
 	
     public void Awake()
     {
         CLICK_SPHERE_PREFAB = (GameObject)Resources.Load(CLICK_SPHERE);
         PATH_SPHERE_PREFAB = (GameObject)Resources.Load(PATH_SPHERE);
+
+		MovePath = new Stack<Vector2>();
     }
 
 	// Update is called once per frame
@@ -42,10 +53,7 @@ public class PlayerController : MonoBehaviour {
                 if (hit.transform != null && LegalNavigationBlock(hit.transform))
                 {
                     // Perform pathfinding.
-                    if (activeLevel == null || !activeLevel.enabled)
-                        activeLevel = GameObject.FindObjectOfType<LevelGenerator>() as LevelGenerator;
-
-                    MovePath = activeLevel.pathfinder.FindPath(new Vector2(transform.position.x, transform.position.z), new Vector2(hit.transform.position.x, hit.transform.position.z));
+                    MovePath = ActiveLevel.pathfinder.FindPath(new Vector2(transform.position.x, transform.position.z), new Vector2(hit.transform.position.x, hit.transform.position.z));
 
 					if (MovePath.Count > 0)
 					{
@@ -64,6 +72,24 @@ public class PlayerController : MonoBehaviour {
                 }
             }
         }
+
+		if (State == PlayerState.WAIT_FOR_INPUT && Input.anyKeyDown)
+		{
+			Vector2 target = new Vector2(transform.position.x, transform.position.z);
+
+			// Find the desired direciton of movment, and move the character
+			// W
+			if (Input.GetKeyDown(KeyCode.W) && ActiveLevel.IsTargetBlockLegalForMove(target + Vector2.up)) target = target + Vector2.up;
+			// A
+			else if (Input.GetKeyDown(KeyCode.A) && ActiveLevel.IsTargetBlockLegalForMove(target + Vector2.left)) target = target + Vector2.left;
+			// S
+			else if (Input.GetKeyDown(KeyCode.S) && ActiveLevel.IsTargetBlockLegalForMove(target + Vector2.down)) target = target + Vector2.down;
+			// D
+			else if (Input.GetKeyDown(KeyCode.D) && ActiveLevel.IsTargetBlockLegalForMove(target + Vector2.right)) target = target + Vector2.right;
+
+			MoveTarget = new Vector3(target.x, transform.position.y, target.y);
+			State = PlayerState.CAMERA_MOVING;
+		}
 
         // Move the player to the move target
         // Camera movement is bound by the _MaxCameraMoveSpeedPerSecond value

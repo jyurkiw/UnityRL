@@ -25,8 +25,8 @@ public class StairController : MonoBehaviour {
 			bool changeLevel = false;
 
 			if (_StairType == StairType.DOWN)
-				changeLevel = player.activeLevel.SetNextSeed();
-			else changeLevel = player.activeLevel.SetPreviousSeed();
+				changeLevel = player.ActiveLevel.SetNextSeed();
+			else changeLevel = player.ActiveLevel.SetPreviousSeed();
 
 			if (changeLevel)
 			{
@@ -34,7 +34,7 @@ public class StairController : MonoBehaviour {
 					player.State = PlayerState.MOVING_DOWN;
 				else player.State = PlayerState.MOVING_UP;
 
-				player.activeLevel.Init();
+				player.ActiveLevel.Init();
 				player.CancelPathfindingAndMovement();
 			}
 			else
