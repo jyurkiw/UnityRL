@@ -6,7 +6,7 @@ Project Goals:
 	Learn basic decision tree-driven AI
 	Complete a minimum viable product
 
- MVP Featureset:
+ MVP Featureset (**Bold** = In-progress, *Italics* = Placeholder in-place):
 Gameplay:
 * Simple character creation
 	* Class + Race
