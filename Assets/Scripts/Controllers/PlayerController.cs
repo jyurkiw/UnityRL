@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public enum PlayerState { WAIT_FOR_INPUT, CAMERA_MOVING }
+public enum PlayerState { WAIT_FOR_INPUT, CAMERA_MOVING, MOVING_UP, MOVING_DOWN }
 
 /// <summary>
 /// Basic player controller for a 3d roguelike.
@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour {
 	// Cancel all pathfinding and movement.
 	public void CancelPathfindingAndMovement()
 	{
-		State = PlayerState.WAIT_FOR_INPUT;
 		MovePath.Clear();
+		State = PlayerState.WAIT_FOR_INPUT;
 	}
 }
