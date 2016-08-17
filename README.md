@@ -16,6 +16,13 @@ Gameplay:
 	* Level + Loot
 	* Each level should have enough enemy XP for the player to advance a level
 * Basic enemy set (3 enemies)
+	* Should spawn in random squares in every level
+	* Should automatically move towards the player
+		* Should only move when the player moves
+	* Player movement should be interrupted when an enemy moves adjacent
+* Basic combat
+	* Player can attack monsters
+	* Monsters can attack player
 * Simple Victory condition
 	* Defeat boss monster on dungeon level 10
 * Functional GUI
@@ -23,7 +30,7 @@ Gameplay:
 	* Dungeon level display
 * Navigation
 	* (COMPLETE) Click-to-move navigation
-	* **WASD stepping**
+	* (COMPLETE) WASD stepping
 * Map Generation:
 	* *Simple procedural dungeon generation that is not Drunkard walk*
 * Game State Save
