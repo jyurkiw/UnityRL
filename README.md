@@ -2,9 +2,9 @@
 A roguelike in Unity3D
 
 Project Goals:
-	Learn A* Pathfinding
-	Learn basic decision tree-driven AI
-	Complete a minimum viable product
+	* Learn A* Pathfinding
+	* Learn basic decision tree-driven AI
+	* Complete a minimum viable product
 
  MVP Featureset (**Bold** = In-progress, *Italics* = Placeholder in-place):
 Gameplay:
