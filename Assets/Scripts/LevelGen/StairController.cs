@@ -11,7 +11,12 @@ public class StairController : MonoBehaviour {
 
 	public void Awake()
 	{
-		if (_StairType == StairType.UP) canTrigger = false;
+		// Get the player controller
+		PlayerController playerController = FindObjectOfType<PlayerController>();
+
+		if (_StairType == StairType.UP && playerController.State == PlayerState.MOVING_DOWN ||
+			_StairType == StairType.DOWN && playerController.State == PlayerState.MOVING_UP)
+			canTrigger = false;
 	}
 
 	public void OnTriggerEnter(Collider other)
@@ -27,8 +32,12 @@ public class StairController : MonoBehaviour {
 
 			if (changeLevel)
 			{
-				player.CancelPathfindingAndMovement();
+				if (_StairType == StairType.DOWN)
+					player.State = PlayerState.MOVING_DOWN;
+				else player.State = PlayerState.MOVING_UP;
+
 				player.activeLevel.Init();
+				player.CancelPathfindingAndMovement();
 			}
 			else
 			{

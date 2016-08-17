@@ -22,11 +22,16 @@ public class LevelGenerator : MonoBehaviour {
 	public Vector2 DownStairLoc { get; set; }
 
 	private LinkedList<int> seeds = new LinkedList<int>();
+	private PlayerController playerController;
 
 	// Use this for initialization
 	public void Awake () {
+		playerController = FindObjectOfType<PlayerController>();
 		Random.InitState(_Seed);
+
+		playerController.State = PlayerState.MOVING_DOWN;
         Init();
+		playerController.State = PlayerState.WAIT_FOR_INPUT;
 	}
 
 	// Initialize the floor based on the _Seed value.
@@ -84,6 +89,10 @@ public class LevelGenerator : MonoBehaviour {
 		Level[dsY][dsX] = Instantiate(_DownStair);
 		Level[dsY][dsX].transform.localPosition = stairPos;
 
+		// Set the position of the player controller
+		if (playerController.State == PlayerState.MOVING_UP)
+			playerController.transform.position = new Vector3(dsX, 0, dsY);
+
 		dsY = Random.Range(0, Level.Length);
 		dsX = Random.Range(0, Level[dsY].Length);
 		stairPos = new Vector3(dsX, 1.2f, dsY);
@@ -94,8 +103,8 @@ public class LevelGenerator : MonoBehaviour {
 		Level[dsY][dsX].transform.localPosition = stairPos;
 
 		// Set the position of the player controller
-		PlayerController playerController = FindObjectOfType<PlayerController>();
-		playerController.transform.position = new Vector3(dsX, 0, dsY);
+		if (playerController.State == PlayerState.MOVING_DOWN)
+			playerController.transform.position = new Vector3(dsX, 0, dsY);
     }
 
 	// Store the previous seed value, and generate a new one.
