@@ -10,8 +10,6 @@ public class PathNode {
 
 // Basis for our A* pathfinding system.
 public class Pathfinder {
-    public const int MOVE_COST = 1;
-
     public NavType[][] BlockGrid;
     public HeuristicFinder heuristic = new HeuristicFinder();
 
@@ -87,16 +85,16 @@ public class Pathfinder {
 
             foreach (Vector2 loc in adjacentBlocks)
                 if (open.Where(o => o.loc == loc).Count() == 0)
-                    open.Add(new PathNode() { g = current.g + MOVE_COST, loc = loc, parent = current });
+                    open.Add(new PathNode() { g = current.g + BlockGrid[(int)loc.y][(int)loc.x].GValue, loc = loc, parent = current });
                 else
                 {
                     PathNode targetNode = open.Where(o => o.loc == loc).FirstOrDefault();
 
                     // check for reparantage-efficiency
-                    if (targetNode != null && current.g + MOVE_COST < targetNode.g)
+					if (targetNode != null && current.g + BlockGrid[(int)loc.y][(int)loc.x].GValue < targetNode.g)
                     {
                         int tnIdx = open.IndexOf(targetNode);
-                        open[tnIdx].g = current.g + MOVE_COST;
+						open[tnIdx].g = current.g + BlockGrid[(int)loc.y][(int)loc.x].GValue;
                         open[tnIdx].parent = current;
                     }
                 }

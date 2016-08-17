@@ -7,8 +7,6 @@ public class StairController : MonoBehaviour {
 	public StairType _StairType;
 	private bool canTrigger = true;
 
-	private const string PLAYER_OBJECT_NAME = "PlayerModel";
-
 	public void Awake()
 	{
 		// Get the player controller
@@ -48,6 +46,6 @@ public class StairController : MonoBehaviour {
 
 	public void OnTriggerExit(Collider other)
 	{
-		if (_StairType == StairType.UP) canTrigger = true;
+		canTrigger = true;
 	}
 }
