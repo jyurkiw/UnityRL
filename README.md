@@ -8,8 +8,8 @@ Project Goals:
 
  MVP Featureset:
  	Gameplay:
-		-[ ] Simple character creation
-			Class + Race
+		- Simple character creation
+			 - Class + Race
 		Simple character advancement
 			Level + Loot
 			Each level should have enough enemy XP for the player to advance a level
@@ -25,7 +25,7 @@ Project Goals:
 	Map Generation:
 		Simple procedural dungeon generation that is not Drunkard walk
 	Game State Save
-o		Record character status
-o		Record dungeon level
-o		Record current level state
-o		Record previous level states
+		Record character status
+		Record dungeon level
+		Record current level state
+		Record previous level states
