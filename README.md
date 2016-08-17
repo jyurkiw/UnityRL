@@ -22,8 +22,8 @@ Gameplay:
 	* HP/MP
 	* Dungeon level display
 * Navigation
-	* **Click-to-move navigation**
-	* WASD stepping
+	* (COMPLETE) Click-to-move navigation
+	* **WASD stepping**
 * Map Generation:
 	* *Simple procedural dungeon generation that is not Drunkard walk*
 * Game State Save
