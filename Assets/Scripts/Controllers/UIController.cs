@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class UIController : MonoBehaviour {
+    // Info UI
 	public PlayerInfo _PlayerInfo;
 	public PlayerClass _PlayerClass;
 
@@ -12,6 +13,19 @@ public class UIController : MonoBehaviour {
 
 	public Text _HitPointsValue;
 	public Text _MagicPointsValue;
+
+    // Floor UI
+    public Text _FloorValue;
+
+    private LevelGenerator _level;
+    private LevelGenerator level
+    {
+        get
+        {
+            if (_level == null) _level = FindObjectOfType<LevelGenerator>();
+            return _level;
+        }
+    }
 
 	public void Update()
 	{
@@ -32,5 +46,11 @@ public class UIController : MonoBehaviour {
 
 			_PlayerClass.Dirty = false;
 		}
+
+        if (level.Dirty && _FloorValue != null)
+        {
+            _FloorValue.text = level.Floor.ToString();
+        }
+
 	}
 }

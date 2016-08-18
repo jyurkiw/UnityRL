@@ -21,6 +21,16 @@ public class LevelGenerator : MonoBehaviour {
 	public Vector2 UpStairLoc { get; set; }
 	public Vector2 DownStairLoc { get; set; }
 
+    public bool Dirty = false;
+
+    public int Floor
+    {
+        get
+        {
+            return seeds.Count + 1;
+        }
+    }
+
 	private LinkedList<int> seeds = new LinkedList<int>();
 	private PlayerController playerController;
 
@@ -118,7 +128,9 @@ public class LevelGenerator : MonoBehaviour {
 		_Seed = Random.Range(0, int.MaxValue);
 		Random.InitState(_Seed);
 
-		return true;
+        Dirty = true;
+
+        return true;
 	}
 
 	// Move back to the previous seed value.
@@ -129,6 +141,9 @@ public class LevelGenerator : MonoBehaviour {
 		_Seed = seeds.Last.Value;
 		seeds.RemoveLast();
 		Random.InitState(_Seed);
+
+        Dirty = true;
+
 		return true;
 	}
 
@@ -142,6 +157,7 @@ public class LevelGenerator : MonoBehaviour {
 		legal &= y >= 0 && y < Level.Length;
 		legal &= x >= 0 && Level.Length > 0 && x < Level[0].Length;
 		legal &= Level[y][x].GetComponent<NavType>().blockType != BlockType.WALL;
-		return legal;
+
+        return legal;
 	}
 }
