@@ -41,7 +41,7 @@ public class UIController : MonoBehaviour {
 			_ClassValue.text = _PlayerClass._ClassName;
 			_LevelValue.text = _PlayerClass._Level.ToString();
 
-			_HitPointsValue.text = _PlayerClass._CurrentHitPoints.ToString() + "/" + _PlayerClass._MaximumHitPoint.ToString();
+			_HitPointsValue.text = _PlayerClass._CurrentHitPoints.ToString() + "/" + _PlayerClass._MaximumHitPoints.ToString();
 			_MagicPointsValue.text = _PlayerClass._CurrentMagicPoints.ToString() + "/" + _PlayerClass._MaximumMagicPoints.ToString();
 
 			_PlayerClass.Dirty = false;
