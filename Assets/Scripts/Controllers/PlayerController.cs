@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public enum PlayerState { WAIT_FOR_INPUT, CAMERA_MOVING, MOVING_UP, MOVING_DOWN }
+public enum PlayerState { WAIT_FOR_INPUT, CAMERA_MOVING, MOVING_UP, MOVING_DOWN, IN_CHARACTER_CREATION }
 
 /// <summary>
 /// Basic player controller for a 3d roguelike.
@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour {
         PATH_SPHERE_PREFAB = (GameObject)Resources.Load(PATH_SPHERE);
 
 		MovePath = new Stack<Vector2>();
+		State = PlayerState.IN_CHARACTER_CREATION;
     }
 
 	// Update is called once per frame
