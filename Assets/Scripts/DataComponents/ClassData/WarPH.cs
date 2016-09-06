@@ -14,24 +14,24 @@ namespace Assets.Scripts.DataComponents.ClassData
 			get { return "Warrior"; }
 		}
 
-		public int MaxHP(int level)
+		public int MaxHP(int level, int raceMod)
 		{
-			return level * 8;
+			return level * (8 + raceMod);
 		}
 
-		public int MaxMP(int level)
+		public int MaxMP(int level, int raceMod)
 		{
-			return 2;
+			return 2 + (level * raceMod);
 		}
 
-		public int HPIncrease(int level)
+		public int HPIncrease(int level, int raceMod)
 		{
-			return 8;
+			return 8 + raceMod;
 		}
 
-		public int MPIncrease(int level)
+		public int MPIncrease(int level, int raceMod)
 		{
-			return 0;
+			return 0 + raceMod;
 		}
 	}
 }

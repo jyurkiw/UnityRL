@@ -9,6 +9,7 @@ public class UIController : MonoBehaviour {
 
 	public Text _NameValue;
 	public Text _ClassValue;
+	public Text _RaceValue;
 	public Text _LevelValue;
 
 	public Text _HitPointsValue;
@@ -33,11 +34,16 @@ public class UIController : MonoBehaviour {
 		{
 			_NameValue.text = _PlayerInfo._CharacterName;
 
+			if (_PlayerInfo._Race != null)
+				_RaceValue.text = _PlayerInfo._Race.RaceName;
+
 			_PlayerInfo.Dirty = false;
 		}
 
 		if (_PlayerClass != null && _PlayerClass.Dirty)
 		{
+			_PlayerClass.UpdatePlayerData();
+
 			_ClassValue.text = _PlayerClass._ClassName;
 			_LevelValue.text = _PlayerClass._Level.ToString();
 
