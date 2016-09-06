@@ -11,6 +11,8 @@ public class PlayerInfo : MonoBehaviour {
 		Dirty = false;
 	}
 
+	// Set the player race.
+	// Default does nothing.
 	public void SetRace(string race)
 	{
 		switch (race)

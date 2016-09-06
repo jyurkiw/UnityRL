@@ -2,6 +2,7 @@
 using System.Collections;
 
 // Human race placeholder class
+// Real races will be loaded from a data file in the future.
 public class HumPH : IRace {
 
 	public string RaceName

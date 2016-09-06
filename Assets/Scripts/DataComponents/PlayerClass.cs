@@ -22,6 +22,7 @@ public class PlayerClass : MonoBehaviour {
 		Dirty = false;
 	}
 
+	// Set the player class.
 	public void SetPlayerClass(string className)
 	{
 		switch (className)
@@ -34,6 +35,8 @@ public class PlayerClass : MonoBehaviour {
 		}
 	}
 
+	// Update the player data. This call is driven by the UI (called in UIConttroller.Update()
+	// when the PlayerClass object is dirty).
 	public void UpdatePlayerData()
 	{
 		if (_Class != null)
@@ -55,6 +58,8 @@ public class PlayerClass : MonoBehaviour {
 		}
 	}
 
+	// Called when the play button is pressed.
+	// Disables the character creation ui panel and sets the player state to WAIT_FOR_INPUT
 	public void PlayButtonAction()
 	{
 		if (!Dirty && !playerInfo.Dirty && _Class != null && playerInfo._Race != null)
