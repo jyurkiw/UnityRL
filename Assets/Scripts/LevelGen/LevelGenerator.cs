@@ -95,12 +95,12 @@ public class LevelGenerator : MonoBehaviour {
 		Vector3 stairPos = new Vector3(dsX, 0, dsY);
 		DownStairLoc = new Vector2(dsX, dsY);
 
-		Destroy(Level[dsY][dsX]);
+		DestroyImmediate(Level[dsY][dsX]);
 		Level[dsY][dsX] = Instantiate(_DownStair);
 		Level[dsY][dsX].transform.localPosition = stairPos;
 
 		// Set the position of the player controller
-		if (playerController.State == PlayerState.MOVING_UP)
+		if (playerController != null && playerController.State == PlayerState.MOVING_UP)
 			playerController.transform.position = new Vector3(dsX, 0, dsY);
 
 		dsY = Random.Range(0, Level.Length);
@@ -113,7 +113,7 @@ public class LevelGenerator : MonoBehaviour {
 		Level[dsY][dsX].transform.localPosition = stairPos;
 
 		// Set the position of the player controller
-		if (playerController.State == PlayerState.MOVING_DOWN)
+		if (playerController != null && playerController.State == PlayerState.MOVING_DOWN)
 			playerController.transform.position = new Vector3(dsX, 0, dsY);
     }
 

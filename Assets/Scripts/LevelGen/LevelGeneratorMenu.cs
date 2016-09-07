@@ -6,8 +6,8 @@ namespace Assets.Scripts.LevelGen
 {
     public class LevelGeneratorMenu : EditorWindow
     {
-        public int seed, x, y, z, width, depth;
-        GameObject walls, floors;
+        public int seed, x = 0, y = 0, z = 0, width, depth;
+        GameObject walls, floors, stairsUp, stairsDown;
 
 
         // Add menu named "Generate Level In-Editor" to the Level Gen menu
@@ -25,21 +25,23 @@ namespace Assets.Scripts.LevelGen
         {
             GUILayout.Label("Generate Level In-Place", EditorStyles.boldLabel);
 
-            seed = EditorGUILayout.IntField("Seed", 0);
+            seed = EditorGUILayout.IntField("Seed", seed);
 
             GUILayout.Space(10f);
 
-            x = EditorGUILayout.IntField("X", 0);
-            y = EditorGUILayout.IntField("Y", 0);
-            z = EditorGUILayout.IntField("Z", 0);
+            x = EditorGUILayout.IntField("X", x);
+            y = EditorGUILayout.IntField("Y", y);
+            z = EditorGUILayout.IntField("Z", z);
 
             GUILayout.Space(10f);
 
-            width = EditorGUILayout.IntField("Width", 10);
-            depth = EditorGUILayout.IntField("Depth", 10);
+            width = EditorGUILayout.IntField("Width", width);
+            depth = EditorGUILayout.IntField("Depth", depth);
             
             walls = (GameObject)EditorGUILayout.ObjectField("Wall Prefab", walls, typeof(GameObject), false);
             floors = (GameObject)EditorGUILayout.ObjectField("Floor Prefab", floors, typeof(GameObject), false);
+			stairsUp = (GameObject)EditorGUILayout.ObjectField("Stairs Up Prefab", stairsUp, typeof(GameObject), false);
+			stairsDown = (GameObject)EditorGUILayout.ObjectField("Stairs Down Prefab", stairsDown, typeof(GameObject), false);
 
             GUILayout.Space(10f);
 
@@ -53,6 +55,8 @@ namespace Assets.Scripts.LevelGen
                 generator._Width = width;
                 generator._Floor = floors;
                 generator._Wall = walls;
+				generator._UpStair = stairsUp;
+				generator._DownStair = stairsDown;
                 generator._Seed = seed;
 
                 generator.GenerateLevelStructure();
