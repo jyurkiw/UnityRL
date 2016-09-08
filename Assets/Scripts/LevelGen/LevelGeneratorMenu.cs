@@ -58,6 +58,7 @@ namespace Assets.Scripts.LevelGen
 				generator._UpStair = stairsUp;
 				generator._DownStair = stairsDown;
                 generator._Seed = seed;
+				generator.InEditor = true;
 
                 generator.GenerateLevelStructure();
             }

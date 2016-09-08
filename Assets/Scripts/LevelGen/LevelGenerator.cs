@@ -22,6 +22,7 @@ public class LevelGenerator : MonoBehaviour {
 	public Vector2 DownStairLoc { get; set; }
 
     public bool Dirty = false;
+	public bool InEditor = false;
 
     public int Floor
     {
@@ -95,7 +96,10 @@ public class LevelGenerator : MonoBehaviour {
 		Vector3 stairPos = new Vector3(dsX, 0, dsY);
 		DownStairLoc = new Vector2(dsX, dsY);
 
-		DestroyImmediate(Level[dsY][dsX]);
+		if (!InEditor)
+			Destroy(Level[dsY][dsX]);
+		else DestroyImmediate(Level[dsY][dsX]);
+
 		Level[dsY][dsX] = Instantiate(_DownStair);
 		Level[dsY][dsX].transform.localPosition = stairPos;
 
@@ -108,7 +112,10 @@ public class LevelGenerator : MonoBehaviour {
 		stairPos = new Vector3(dsX, 1.2f, dsY);
 		UpStairLoc = new Vector2(dsX, dsY);
 
-		Destroy(Level[dsY][dsX]);
+		if (!InEditor)
+			Destroy(Level[dsY][dsX]);
+		else DestroyImmediate(Level[dsY][dsX]);
+
 		Level[dsY][dsX] = Instantiate(_UpStair);
 		Level[dsY][dsX].transform.localPosition = stairPos;
 
